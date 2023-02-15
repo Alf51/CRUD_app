@@ -7,6 +7,18 @@
     <groupId>ru.alishev.springcourse</groupId>
     <artifactId>spring-mvc-app-java-config</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>14</source>
+                    <target>14</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <packaging>war</packaging>
 
     <name>spring-mvc-app1 Maven Webapp</name>
@@ -59,7 +71,6 @@
             <version>3.1.1.RELEASE</version>
         </dependency>
 
-
         <!-- https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api -->
         <dependency>
             <groupId>jakarta.servlet</groupId>
@@ -67,7 +78,6 @@
             <version>6.0.0</version>
             <scope>provided</scope>
         </dependency>
-
     </dependencies>
 
 </project>
