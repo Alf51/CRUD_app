@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://thymeleaf.org ">
 <head>
     <meta charset="UTF-8">
-    <title>Person1</title>
+    <title th:text="${person.getName()}">VALUE</title>
 </head>
 <body>
-<a href="">Link for nothing</a>
-<p th:text="${person}"></p>
+<a href="/people">На главную страницу</a>
+<p th:text="${person.getId()}">VALUE</p>
+<p th:text="${person.getName()}">VALUE</p>
 </body>
 </html>
