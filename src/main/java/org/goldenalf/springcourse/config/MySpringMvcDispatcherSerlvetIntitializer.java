@@ -1,6 +1,9 @@
 package org.goldenalf.springcourse.config;
 
 
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class MySpringMvcDispatcherSerlvetIntitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -17,5 +20,17 @@ public class MySpringMvcDispatcherSerlvetIntitializer extends AbstractAnnotation
     @Override
     protected String[] getServletMappings()  {
         return new String[]{"/"};
+    }
+
+    @Override // запускаеться при старте Spring и добовляет один приватный фильтр
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        super.onStartup(servletContext);
+        registerHiddenFieldFilter(servletContext);
+    }
+
+    //нащ приватный фильтр
+    private  void registerHiddenFieldFilter(ServletContext servletContext) {
+        servletContext.addFilter("hiddenHttpMethodFilter",
+                new HiddenHttpMethodFilter()).addMappingForUrlPatterns(null, true, "/*");
     }
 }

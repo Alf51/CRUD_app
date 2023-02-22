@@ -9,5 +9,7 @@
 <a href="/people">На главную страницу</a>
 <p th:text="${person.getId()}">VALUE</p>
 <p th:text="${person.getName()}">VALUE</p>
+<a th:href="@{/people/{id}/edit(id=${person.getId()})}" >редактировать</a>
+
 </body>
 </html>
