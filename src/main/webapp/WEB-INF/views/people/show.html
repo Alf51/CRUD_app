@@ -11,5 +11,9 @@
 <p th:text="${person.getName()}">VALUE</p>
 <a th:href="@{/people/{id}/edit(id=${person.getId()})}" >редактировать</a>
 
+<form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId})}">
+    <input type="submit" value="удалить персонажа"/>
+</form>
+
 </body>
 </html>
