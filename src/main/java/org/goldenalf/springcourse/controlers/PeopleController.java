@@ -1,10 +1,12 @@
 package org.goldenalf.springcourse.controlers;
 
+import jakarta.validation.Valid;
 import org.goldenalf.springcourse.dao.PersonsDAO;
 import org.goldenalf.springcourse.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -37,7 +39,12 @@ public class PeopleController {
     }
 
     @PostMapping
-    public String create(@ModelAttribute("person") Person person) {
+    public String create(@ModelAttribute("person") @Valid Person person,
+                         BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "people/new";
+        }
+
         personsDAO.addPerson(person);
         return "redirect:/people";
     }
@@ -49,11 +56,18 @@ public class PeopleController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("person") Person person, @PathVariable("id") int id) {
+    public String update(@ModelAttribute("person") @Valid Person person,
+                         BindingResult bindingResult,
+                         @PathVariable("id") int id) {
+        if (bindingResult.hasErrors()) {
+            return "people/edit";
+        }
+
         personsDAO.update(id, person);
         return "redirect:/people";
     }
 
+    //принял вызов, выташил id в переменную и удали из базы
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
         personsDAO.delete(id);

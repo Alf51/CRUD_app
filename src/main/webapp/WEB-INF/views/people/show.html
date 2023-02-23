@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://thymeleaf.org ">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title th:text="${person.getName()}">VALUE</title>
@@ -9,6 +8,8 @@
 <a href="/people">На главную страницу</a>
 <p th:text="${person.getId()}">VALUE</p>
 <p th:text="${person.getName()}">VALUE</p>
+<p th:text="${person.getAge()}">VALUE</p>
+<p th:text="${person.getEmail()}">VALUE</p>
 <a th:href="@{/people/{id}/edit(id=${person.getId()})}" >редактировать</a>
 
 <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId})}">
