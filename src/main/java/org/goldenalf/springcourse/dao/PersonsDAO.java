@@ -3,34 +3,64 @@ package org.goldenalf.springcourse.dao;
 import org.goldenalf.springcourse.model.Person;
 import org.springframework.stereotype.Component;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class PersonsDAO {
-    private int COUNT_ID;
+    private static final String URL = "jdbc:postgresql://localhost:5432/first_db";
+    private static final String USER_NAME = "postgres";
+    private static final String PASSWORD = "456789";
 
-    private final List<Person> personList = new ArrayList<>();
+    Connection connection;
 
     {
-        personList.add(new Person(++COUNT_ID, "Петька", 41, "petka@gmail.com"));
-        personList.add(new Person(++COUNT_ID, "Greench", 21, "move@gmail.com"));
-        personList.add(new Person(++COUNT_ID, "Марина", 31, "seled@gmail.com"));
-        personList.add(new Person(++COUNT_ID, "Стас", 47, "kvaka@gmail.com"));
-        personList.add(new Person(++COUNT_ID, "Кевин", 19, "kurtka@gmail.com"));
+        try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
+
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(USER_NAME);
+            System.out.println(URL);
+            System.out.println(PASSWORD);
+            throw new RuntimeException(e);
+        }
     }
 
     public List<Person> index() {
-        return new ArrayList<>(personList);
+        List<Person> personList = new ArrayList<>();
+
+        try {
+            Statement statement = connection.createStatement();
+            String SQL = "SELECT * FROM Person";
+            ResultSet resultSet = statement.executeQuery(SQL);
+
+            while (resultSet.next()) {
+                Person person = new Person();
+
+                person.setId(resultSet.getInt("id"));
+                person.setName(resultSet.getString("name"));
+                person.setAge(resultSet.getInt("age"));
+                person.setEmail(resultSet.getString("email"));
+
+                personList.add(person);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return personList;
     }
 
     public Person show(int id) {
-        return personList.stream().filter(person -> person.getId() == id).findAny().orElse(null);
+        //return personList.stream().filter(person -> person.getId() == id).findAny().orElse(null);
+        return null;
     }
 
     public void addPerson(Person person) {
-        person.setId(++COUNT_ID);
-        personList.add(person);
+//        person.setId(++COUNT_ID);
+//        personList.add(person);
     }
 
     public void update(int id, Person personUpdate) {
@@ -41,6 +71,6 @@ public class PersonsDAO {
     }
 
     public void delete(int id) {
-        personList.removeIf(e -> e.getId() == id);
+//        personList.removeIf(e -> e.getId() == id);
     }
 }
