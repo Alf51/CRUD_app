@@ -12,6 +12,7 @@ public class PersonsDAO {
     private static final String URL = "jdbc:postgresql://localhost:5432/first_db";
     private static final String USER_NAME = "postgres";
     private static final String PASSWORD = "456789";
+    private static int COUNT = 12;
 
     Connection connection;
 
@@ -58,9 +59,16 @@ public class PersonsDAO {
         return null;
     }
 
-    public void addPerson(Person person) {
-//        person.setId(++COUNT_ID);
-//        personList.add(person);
+    public void save(Person person) {
+        try {
+            Statement statement = connection.createStatement();
+            String SQL = String.format("INSERT INTO person VALUES (%d, '%s', '%d', '%s')",
+                    ++COUNT, person.getName(), person.getAge(), person.getEmail());
+            System.out.println("мой запрос = " + SQL);
+            statement.executeUpdate(SQL);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void update(int id, Person personUpdate) {

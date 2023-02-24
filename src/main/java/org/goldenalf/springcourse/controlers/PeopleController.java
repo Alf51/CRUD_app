@@ -45,7 +45,7 @@ public class PeopleController {
             return "people/new";
         }
 
-        personsDAO.addPerson(person);
+        personsDAO.save(person);
         return "redirect:/people";
     }
 
