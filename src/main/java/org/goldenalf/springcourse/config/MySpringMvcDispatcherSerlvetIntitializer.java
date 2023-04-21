@@ -22,7 +22,7 @@ public class MySpringMvcDispatcherSerlvetIntitializer extends AbstractAnnotation
         return new String[]{"/"};
     }
 
-    @Override // запускаеться при старте Spring и добовляет один приватный фильтр
+    @Override // запускается при старте Spring и добавляет один приватный фильтр
     public void onStartup(ServletContext servletContext) throws ServletException {
         super.onStartup(servletContext);
         registerHiddenFieldFilter(servletContext);

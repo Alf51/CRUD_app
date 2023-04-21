@@ -32,10 +32,9 @@ public class PersonsDAO {
 
     public void save(Person person) {
         //Для генерации ID
-        //int maxId = index().stream().mapToInt(Person::getId).max().orElse(1);
-
+        int maxId = index().stream().mapToInt(Person::getId).max().orElse(1);
         jdbcTemplate.update("INSERT INTO person VALUES (?, ?, ?, ?)",
-                20, person.getName(), person.getAge(), person.getEmail());
+                ++maxId, person.getName(), person.getAge(), person.getEmail());
     }
 
     public void update(int id, Person personUpdate) {

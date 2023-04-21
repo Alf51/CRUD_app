@@ -67,7 +67,7 @@ public class PeopleController {
         return "redirect:/people";
     }
 
-    //принял вызов, выташил id в переменную и удали из базы
+    //принял вызов, вытащил id в переменную и удали из базы
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
         personsDAO.delete(id);
