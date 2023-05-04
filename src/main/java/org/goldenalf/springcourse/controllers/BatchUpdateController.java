@@ -1,4 +1,4 @@
-package org.goldenalf.springcourse.controlers;
+package org.goldenalf.springcourse.controllers;
 
 import org.goldenalf.springcourse.dao.PersonsDAO;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,2 +1,6 @@
 # Project exclude paths
 /target/
+
+!/src/main/resources/database.properties
+!/.gitignore
+

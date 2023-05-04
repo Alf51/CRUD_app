@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class PersonsDAO {
@@ -25,16 +26,19 @@ public class PersonsDAO {
         return jdbcTemplate.query("SELECT * FROM person", new BeanPropertyRowMapper<>(Person.class));
     }
 
+    public Optional<Person> show(String email) {
+        return jdbcTemplate.query("SELECT * FROM person WHERE email=?", new BeanPropertyRowMapper<>(Person.class), email)
+                .stream().findAny();
+    }
+
     public Person show(int id) {
         return jdbcTemplate.query("SELECT * FROM person WHERE id=?", new BeanPropertyRowMapper<>(Person.class), id)
                 .stream().findAny().orElse(null);
     }
 
     public void save(Person person) {
-        //Для генерации ID
-        int maxId = index().stream().mapToInt(Person::getId).max().orElse(1);
-        jdbcTemplate.update("INSERT INTO person VALUES (?, ?, ?, ?)",
-                ++maxId, person.getName(), person.getAge(), person.getEmail());
+        jdbcTemplate.update("INSERT INTO person(name, age, email) VALUES (?, ?, ?)",
+                person.getName(), person.getAge(), person.getEmail());
     }
 
     public void update(int id, Person personUpdate) {
