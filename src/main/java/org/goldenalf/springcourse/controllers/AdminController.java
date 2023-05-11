@@ -1,19 +1,17 @@
 package org.goldenalf.springcourse.controllers;
 
-import jakarta.validation.Valid;
 import org.goldenalf.springcourse.dao.PersonsDAO;
 import org.goldenalf.springcourse.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
-    private PersonsDAO personsDAO;
+    private final PersonsDAO personsDAO;
 
     @Autowired
     public AdminController(PersonsDAO personsDAO) {

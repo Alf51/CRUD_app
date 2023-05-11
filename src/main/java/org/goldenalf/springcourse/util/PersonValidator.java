@@ -4,12 +4,9 @@ import org.goldenalf.springcourse.dao.PersonsDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.Validator;
 
 import org.goldenalf.springcourse.model.Person;
-
-import java.util.List;
 
 @Component
 public class PersonValidator implements Validator {
