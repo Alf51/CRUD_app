@@ -5,6 +5,8 @@
 !/src/main/resources/hibernate.properties
 !/.gitignore
 
+/src/main/resources/database.properties
+/src/main/resources/hibernate.properties
 # Default ignored files
 /shelf/
 /workspace.xml
