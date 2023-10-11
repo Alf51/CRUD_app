@@ -1,8 +1,9 @@
 package org.goldenalf.springcourse.controllers;
 
 import jakarta.validation.Valid;
-import org.goldenalf.springcourse.dao.PersonsDAO;
 import org.goldenalf.springcourse.model.Person;
+import org.goldenalf.springcourse.services.ItemService;
+import org.goldenalf.springcourse.services.PeopleService;
 import org.goldenalf.springcourse.util.PersonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,26 +14,32 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
-    private final PersonsDAO personsDAO;
+    private final PeopleService peopleService;
     private final PersonValidator personValidator;
+    private final ItemService itemService;
+
 
     @Autowired
-    public PeopleController(PersonsDAO personsDAO, PersonValidator personValidator) {
-        this.personsDAO = personsDAO;
+    public PeopleController(PeopleService peopleService, PersonValidator personValidator, ItemService itemService) {
+        this.peopleService = peopleService;
         this.personValidator = personValidator;
+        this.itemService = itemService;
     }
 
     @GetMapping({"/", ""})
     public String index(Model model) {
-        //dao возвращает список всех людей
-        model.addAttribute("people", personsDAO.index());
+        //возвращает список всех людей
+        model.addAttribute("people", peopleService.findAll());
+        itemService.findByName("Робот пылесос");
+        itemService.findByPerson(peopleService.findOne(11));
+        peopleService.test();
         return "people/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        //dao возвращает конкретного персонажа
-        model.addAttribute("person", personsDAO.show(id));
+        //возвращает конкретного персонажа
+        model.addAttribute("person", peopleService.findOne(id));
         return "people/show";
     }
 
@@ -50,34 +57,32 @@ public class PeopleController {
             return "people/new";
         }
 
-        personsDAO.save(person);
+        peopleService.save(person);
         return "redirect:/people";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") int id, Model model) {
-        model.addAttribute("person", personsDAO.show(id));
+        model.addAttribute("person", peopleService.findOne(id));
         return "people/edit";
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("person") @Valid Person person,
-                         BindingResult bindingResult,
-                         @PathVariable("id") int id) {
+    public String update(@ModelAttribute("person") @Valid Person person, @PathVariable("id") int id,
+                         BindingResult bindingResult) {
         personValidator.validate(person, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "people/edit";
         }
-
-        personsDAO.update(id, person);
+        peopleService.update(id, person);
         return "redirect:/people";
     }
 
-    //принял вызов, вытащил id в переменную и удали из базы
+    //принял вызов, вытащил id в переменную и удалил из базы
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        personsDAO.delete(id);
+        peopleService.delete(id);
         return "redirect:/people";
     }
 }

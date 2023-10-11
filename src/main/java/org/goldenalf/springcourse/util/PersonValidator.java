@@ -1,20 +1,19 @@
 package org.goldenalf.springcourse.util;
 
-import org.goldenalf.springcourse.dao.PersonsDAO;
+import org.goldenalf.springcourse.model.Person;
+import org.goldenalf.springcourse.services.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import org.goldenalf.springcourse.model.Person;
-
 @Component
 public class PersonValidator implements Validator {
-    private final PersonsDAO personsDAO;
+    private final PeopleService peopleService;
 
     @Autowired
-    public PersonValidator(PersonsDAO personsDAO) {
-        this.personsDAO = personsDAO;
+    public PersonValidator(PeopleService personsDAO) {
+        this.peopleService = personsDAO;
     }
 
     @Override
@@ -27,8 +26,9 @@ public class PersonValidator implements Validator {
         Person person = (Person) target;
 
         //посмотреть есть ли человек с таким же email в БД
-        if (personsDAO.show(person.getEmail()).isPresent()) {
+        if (peopleService.show(person.getEmail()).isPresent()) {
             errors.rejectValue("email", "", "Данный email уже используется");
         }
+
     }
 }
