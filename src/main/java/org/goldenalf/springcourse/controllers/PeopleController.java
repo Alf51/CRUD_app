@@ -2,7 +2,6 @@ package org.goldenalf.springcourse.controllers;
 
 import jakarta.validation.Valid;
 import org.goldenalf.springcourse.model.Person;
-import org.goldenalf.springcourse.services.ItemService;
 import org.goldenalf.springcourse.services.PeopleService;
 import org.goldenalf.springcourse.util.PersonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +15,12 @@ import org.springframework.web.bind.annotation.*;
 public class PeopleController {
     private final PeopleService peopleService;
     private final PersonValidator personValidator;
-    private final ItemService itemService;
 
 
     @Autowired
-    public PeopleController(PeopleService peopleService, PersonValidator personValidator, ItemService itemService) {
+    public PeopleController(PeopleService peopleService, PersonValidator personValidator) {
         this.peopleService = peopleService;
         this.personValidator = personValidator;
-        this.itemService = itemService;
     }
 
     @GetMapping({"/", ""})

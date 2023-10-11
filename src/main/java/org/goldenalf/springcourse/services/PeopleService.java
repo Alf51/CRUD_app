@@ -1,8 +1,11 @@
 package org.goldenalf.springcourse.services;
 
+import org.goldenalf.springcourse.model.Item;
 import org.goldenalf.springcourse.model.Mood;
 import org.goldenalf.springcourse.model.Person;
 import org.goldenalf.springcourse.repositories.PeopleRepository;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
