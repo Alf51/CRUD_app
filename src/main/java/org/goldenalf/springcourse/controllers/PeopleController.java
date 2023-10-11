@@ -2,7 +2,6 @@ package org.goldenalf.springcourse.controllers;
 
 import jakarta.validation.Valid;
 import org.goldenalf.springcourse.model.Person;
-import org.goldenalf.springcourse.services.ItemService;
 import org.goldenalf.springcourse.services.PeopleService;
 import org.goldenalf.springcourse.util.PersonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,23 +15,18 @@ import org.springframework.web.bind.annotation.*;
 public class PeopleController {
     private final PeopleService peopleService;
     private final PersonValidator personValidator;
-    private final ItemService itemService;
 
 
     @Autowired
-    public PeopleController(PeopleService peopleService, PersonValidator personValidator, ItemService itemService) {
+    public PeopleController(PeopleService peopleService, PersonValidator personValidator) {
         this.peopleService = peopleService;
         this.personValidator = personValidator;
-        this.itemService = itemService;
     }
 
     @GetMapping({"/", ""})
     public String index(Model model) {
         //возвращает список всех людей
         model.addAttribute("people", peopleService.findAll());
-        itemService.findByName("Робот пылесос");
-        itemService.findByPerson(peopleService.findOne(11));
-        peopleService.test();
         return "people/index";
     }
 
@@ -75,6 +69,9 @@ public class PeopleController {
         if (bindingResult.hasErrors()) {
             return "people/edit";
         }
+
+        //TODO переделать мб через Thymeleaf. Для того, чтобы оставить дату добавления пользователя
+        person.setCreatedAt(peopleService.findOne(id).getCreatedAt());
         peopleService.update(id, person);
         return "redirect:/people";
     }

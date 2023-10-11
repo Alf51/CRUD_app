@@ -3,8 +3,10 @@ package org.goldenalf.springcourse.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,17 +37,31 @@ public class Person implements Serializable {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "birth_of_date")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
+    private Date birthOfDate;
+
+    @Column(name = "created_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+
+    @Enumerated(EnumType.STRING)
+    private Mood mood;
+
     @OneToMany(mappedBy = "person")
     private List<Item> itemList;
 
     public Person() {
     }
 
-    public Person(String name, int age, String email, String address) {
+    public Person(String name, int age, String email, String address, Date birthOfDate, Date createdAt) {
         this.name = name;
         this.age = age;
         this.email = email;
         this.address = address;
+        this.birthOfDate = birthOfDate;
+        this.createdAt = createdAt;
     }
 
     public int getId() {
@@ -94,6 +110,30 @@ public class Person implements Serializable {
 
     public void setItemList(List<Item> itemList) {
         this.itemList = itemList;
+    }
+
+    public Date getBirthOfDate() {
+        return birthOfDate;
+    }
+
+    public void setBirthOfDate(Date birhOfDate) {
+        this.birthOfDate = birhOfDate;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Mood getMood() {
+        return mood;
+    }
+
+    public void setMood(Mood mood) {
+        this.mood = mood;
     }
 
     @Override
