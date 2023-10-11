@@ -30,9 +30,6 @@ public class PeopleController {
     public String index(Model model) {
         //возвращает список всех людей
         model.addAttribute("people", peopleService.findAll());
-        itemService.findByName("Робот пылесос");
-        itemService.findByPerson(peopleService.findOne(11));
-        peopleService.test();
         return "people/index";
     }
 
@@ -75,6 +72,9 @@ public class PeopleController {
         if (bindingResult.hasErrors()) {
             return "people/edit";
         }
+
+        //TODO переделать мб через Thymeleaf. Для того, чтобы оставить дату добавления пользователя
+        person.setCreatedAt(peopleService.findOne(id).getCreatedAt());
         peopleService.update(id, person);
         return "redirect:/people";
     }

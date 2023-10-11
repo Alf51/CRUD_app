@@ -11,6 +11,9 @@
 <p th:text="${person.getAge()}">VALUE</p>
 <p th:text="${person.getEmail()}">VALUE</p>
 <p th:text="${person.getAddress()}">VALUE</p>
+<p th:text="${person.getBirthOfDate()}">VALUE</p>
+<p th:text="${person.getCreatedAt()}">VALUE</p>
+<p th:text="${person.getMood()}">VALUE</p>
 <a th:href="@{/people/{id}/edit(id=${person.getId()})}" >редактировать</a>
 
 <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId})}">

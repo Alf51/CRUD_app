@@ -43,8 +43,11 @@ public class Person implements Serializable {
     private Date birthOfDate;
 
     @Column(name = "created_at")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+
+    @Enumerated(EnumType.STRING)
+    private Mood mood;
 
     @OneToMany(mappedBy = "person")
     private List<Item> itemList;
@@ -123,6 +126,14 @@ public class Person implements Serializable {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Mood getMood() {
+        return mood;
+    }
+
+    public void setMood(Mood mood) {
+        this.mood = mood;
     }
 
     @Override
